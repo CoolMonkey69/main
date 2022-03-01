@@ -1,0 +1,42 @@
+START login_page
+
+CONNECT user_database
+
+INPUT username
+INPUT password
+	attempts = 3
+WHILE attempts not equal to 0
+	IF username is found in user_database
+AND
+	password = user_password
+THEN
+	open dashboard
+ELSE 
+	print 'username or password is incorrect'
+	endif count is equal to 0
+
+
+START registration_page
+
+CONNECT user_database
+
+INPUT username
+INPUT password
+INPUT confirm_password
+
+SQL QUERY (
+	CREATE TABLE IF NOT EXISTS users
+	id INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+	username VARCHAR(50) NOT NULL UNIQUE
+	password VARCHAR(225) NOT NULL )
+
+IF password IS EQUAL TO confirm_password
+password = password_hash(password, PASSWORD_DEFAULT)
+ELSE "Passwords don't match"
+
+IF username not found in TABLE users
+	CREATE new_user in TABLE users
+	INSERT username to new_user in TABLE users
+	INSERT password to new_user in TABLE users
+	print "User created successfully"
+ELSE "Username already exists, please try a new one"
